@@ -1,0 +1,159 @@
+{
+  "rewrites": [
+    {
+      "source": "/servicios",
+      "destination": "/servicios/index.html"
+    },
+    {
+      "source": "/servicios/:p*",
+      "destination": "/servicios/:p*/index.html"
+    },
+    {
+      "source": "/industria",
+      "destination": "/industria/index.html"
+    },
+    {
+      "source": "/presupuesto",
+      "destination": "/presupuesto/index.html"
+    },
+    {
+      "source": "/electricista-en-escobar",
+      "destination": "/electricista-en-escobar/index.html"
+    },
+    {
+      "source": "/electricista-en-garin",
+      "destination": "/electricista-en-garin/index.html"
+    },
+    {
+      "source": "/electricista-zona-norte",
+      "destination": "/electricista-zona-norte/index.html"
+    },
+    {
+      "source": "/electricista-en-matheu",
+      "destination": "/electricista-en-matheu/index.html"
+    },
+    {
+      "source": "/electricista-en-belen-de-escobar",
+      "destination": "/electricista-en-belen-de-escobar/index.html"
+    },
+    {
+      "source": "/electricista-en-maquinista-savio",
+      "destination": "/electricista-en-maquinista-savio/index.html"
+    },
+    {
+      "source": "/electricista-en-ingeniero-maschwitz",
+      "destination": "/electricista-en-ingeniero-maschwitz/index.html"
+    },
+    {
+      "source": "/electricista-en-loma-verde",
+      "destination": "/electricista-en-loma-verde/index.html"
+    },
+    {
+      "source": "/electricista-en-pilar",
+      "destination": "/electricista-en-pilar/index.html"
+    },
+    {
+      "source": "/electricista-en-campana",
+      "destination": "/electricista-en-campana/index.html"
+    },
+    {
+      "source": "/electricista-en-tigre",
+      "destination": "/electricista-en-tigre/index.html"
+    },
+    {
+      "source": "/electricista-en-san-fernando",
+      "destination": "/electricista-en-san-fernando/index.html"
+    },
+    {
+      "source": "/electricista-en-san-isidro",
+      "destination": "/electricista-en-san-isidro/index.html"
+    },
+    {
+      "source": "/electricista-en-vicente-lopez",
+      "destination": "/electricista-en-vicente-lopez/index.html"
+    },
+    {
+      "source": "/electricista-en-capital-federal",
+      "destination": "/electricista-en-capital-federal/index.html"
+    },
+    {
+      "source": "/electricista-en-zarate",
+      "destination": "/electricista-en-zarate/index.html"
+    },
+    {
+      "source": "/electricista-industrial-en-cordoba",
+      "destination": "/electricista-industrial-en-cordoba/index.html"
+    },
+    {
+      "source": "/electricista-industrial-en-santa-fe",
+      "destination": "/electricista-industrial-en-santa-fe/index.html"
+    },
+    {
+      "source": "/electricista-industrial-en-entre-rios",
+      "destination": "/electricista-industrial-en-entre-rios/index.html"
+    },
+    {
+      "source": "/electricista-industrial-en-la-pampa",
+      "destination": "/electricista-industrial-en-la-pampa/index.html"
+    },
+    {
+      "source": "/electricista-industrial-en-rio-negro",
+      "destination": "/electricista-industrial-en-rio-negro/index.html"
+    },
+    {
+      "source": "/nosotros",
+      "destination": "/nosotros/index.html"
+    },
+    {
+      "source": "/noticias",
+      "destination": "/noticias/index.html"
+    },
+    {
+      "source": "/noticias/:p*",
+      "destination": "/noticias/:p*/index.html"
+    },
+    {
+      "source": "/consejos",
+      "destination": "/consejos/index.html"
+    },
+    {
+      "source": "/terminos",
+      "destination": "/terminos/index.html"
+    },
+    {
+      "source": "/404",
+      "destination": "/404/index.html"
+    },
+{
+      "source": "/consejos",
+      "destination": "/consejos/index.html"
+    },
+    {
+      "source": "/404",
+      "destination": "/404/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/404.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "electropowerok.com.ar" }],
+      "destination": "https://www.electropowerok.com.ar/:path*",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}
