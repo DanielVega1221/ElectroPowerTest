@@ -28,7 +28,7 @@ const EXTRA_TITLES = {
 };
 
 const PAGE_TITLES = {
-  "/": "Electricista en Escobar y Zona Norte | Instalaciones Eléctricas",
+  "/": "Electricista en Escobar y Zona Norte | Instalaciones Eléctricas | ElectroPower",
   "/servicios": "Servicios Eléctricos en Zona Norte | ElectroPower",
   "/nosotros": "ElectroPower | Electricistas en Escobar y Zona Norte",
   "/noticias": "Noticias | ElectroPower",
