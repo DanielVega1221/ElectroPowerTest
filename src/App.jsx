@@ -2,7 +2,6 @@ import "./App.css";
 import { Suspense, lazy, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { trackPageView } from "./lib/analytics";
-import StickyBar from "./componentes/stickybar/StickyBar";
 
 const Home = lazy(() => import("./paginas/home/Home"));
 const Services = lazy(() => import("./paginas/services/Services"));
@@ -140,7 +139,6 @@ function App() {
         <Route path="/noticias/:slug" element={<NoticiaDetalle />} />
       </Routes>
       </Suspense>
-      <StickyBar />
     </div>
   );
 }

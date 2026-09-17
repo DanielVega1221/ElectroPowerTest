@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Contact.css';
 import { CONFIG } from '../../config';
 import { trackEvent, getWhatsAppURL } from '../../lib/analytics';
 import { Link } from 'react-router-dom';
 import { FaWhatsapp, FaClipboardList } from 'react-icons/fa';
 
-gsap.registerPlugin(ScrollTrigger);
+const isPrerendered =
+  typeof document !== 'undefined' &&
+  document.getElementById('root')?.childElementCount > 0;
 
 const Contact = () => {
   const sectionRef = useRef(null);
@@ -15,29 +15,45 @@ const Contact = () => {
   const infoRef = useRef(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(ctaRef.current, {
-        x: -50,
-        opacity: 0,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 75%',
-        }
-      });
+    if (isPrerendered) return;
 
-      gsap.from(infoRef.current, {
-        x: 50,
-        opacity: 0,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 75%',
-        }
-      });
-    }, sectionRef);
+    let ctx;
+    let cancelled = false;
 
-    return () => ctx.revert();
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
+      ([{ gsap }, { ScrollTrigger }]) => {
+        if (cancelled) return;
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        ctx = gsap.context(() => {
+          gsap.from(ctaRef.current, {
+            x: -50,
+            opacity: 0,
+            duration: 0.8,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 75%',
+            }
+          });
+
+          gsap.from(infoRef.current, {
+            x: 50,
+            opacity: 0,
+            duration: 0.8,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 75%',
+            }
+          });
+        }, sectionRef);
+      }
+    );
+
+    return () => {
+      cancelled = true;
+      ctx?.revert();
+    };
   }, []);
 
   const handleWhatsAppClick = () => {

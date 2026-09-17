@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
 import './Hero.css';
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from '../../lib/analytics';
@@ -52,45 +51,55 @@ const Hero = () => {
   useEffect(() => {
     if (isPrerendered) return;
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    let ctx;
+    let cancelled = false;
 
-      tl.from(titleRef.current, {
-        y: 60,
-        opacity: 0,
-        duration: 0.8,
-      })
-        .from(
-          subtitleRef.current,
-          {
-            y: 40,
-            opacity: 0,
-            duration: 0.7,
-          },
-          "-=0.4"
-        )
-        .from(
-          urgenciasRef.current,
-          {
-            y: 30,
-            opacity: 0,
-            duration: 0.6,
-          },
-          "-=0.35"
-        )
-        .from(
-          [phraseRef.current, buttonsRef.current],
-          {
-            y: 30,
-            opacity: 0,
-            duration: 0.6,
-            stagger: 0.1,
-          },
-          "-=0.3"
-        );
-    }, heroRef);
+    import('gsap').then(({ gsap }) => {
+      if (cancelled) return;
 
-    return () => ctx.revert();
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+        tl.from(titleRef.current, {
+          y: 60,
+          opacity: 0,
+          duration: 0.8,
+        })
+          .from(
+            subtitleRef.current,
+            {
+              y: 40,
+              opacity: 0,
+              duration: 0.7,
+            },
+            "-=0.4"
+          )
+          .from(
+            urgenciasRef.current,
+            {
+              y: 30,
+              opacity: 0,
+              duration: 0.6,
+            },
+            "-=0.35"
+          )
+          .from(
+            [phraseRef.current, buttonsRef.current],
+            {
+              y: 30,
+              opacity: 0,
+              duration: 0.6,
+              stagger: 0.1,
+            },
+            "-=0.3"
+          );
+      }, heroRef);
+    });
+
+    return () => {
+      cancelled = true;
+      ctx?.revert();
+    };
   }, []);
 
   const scrollToContact = () => {

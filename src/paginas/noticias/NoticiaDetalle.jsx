@@ -38,6 +38,20 @@ const renderBloque = (bloque, idx) => {
           </ul>
         </div>
       );
+    case "faq":
+      return (
+        <div className="faq-bloque fade-in-up" key={idx}>
+          <h2>{bloque.titulo || "Preguntas frecuentes"}</h2>
+          {bloque.items.map((item, i) => (
+            <details className="faq-item" key={i} open={i === 0}>
+              <summary>
+                <h3>{item.pregunta}</h3>
+              </summary>
+              <p>{item.respuesta}</p>
+            </details>
+          ))}
+        </div>
+      );
     case "enlace":
       return (
         <div className="noticias-link fade-in-up" key={idx}>
@@ -66,6 +80,10 @@ const NoticiaDetalle = ({ slug: slugProp }) => {
   const urlParam = useParams();
   const slug = slugProp || urlParam.slug;
   const post = getPost(slug);
+
+  const volverA = post?.tipo === 'consejo' ? '/consejos' : '/noticias';
+  const tituloRelacionados =
+    post?.tipo === 'consejo' ? 'Otros consejos' : 'Otras novedades';
 
   if (!post) {
     return (
@@ -97,14 +115,15 @@ const NoticiaDetalle = ({ slug: slugProp }) => {
     .sort((a, b) => b.fecha.localeCompare(a.fecha))
     .slice(0, 3);
 
-  const volverA = post.tipo === 'consejo' ? '/consejos' : '/noticias';
-  const tituloRelacionados =
-    post.tipo === 'consejo' ? 'Otros consejos' : 'Otras novedades';
-
   const mencionaGalan = post.contenido
     .map((b) => {
       if (b.tipo === "listado") {
         return [(b.titulo || ""), ...(b.items || [])].join(" ");
+      }
+      if (b.tipo === "faq") {
+        return (b.items || [])
+          .map((it) => `${it.pregunta || ""} ${it.respuesta || ""}`)
+          .join(" ");
       }
       return b.texto || "";
     })

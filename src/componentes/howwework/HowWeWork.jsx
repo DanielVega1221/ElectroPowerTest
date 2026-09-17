@@ -176,6 +176,10 @@ const HowWeWork = () => {
                 src={electricistaWork}
                 alt="Electricista profesional trabajando"
                 className="work-image"
+                width={960}
+                height={1280}
+                loading="lazy"
+                decoding="async"
               />
               <div className="image-overlay">
                 <div className="overlay-content">

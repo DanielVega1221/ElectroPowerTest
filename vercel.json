@@ -124,14 +124,6 @@
       "source": "/404",
       "destination": "/404/index.html"
     },
-{
-      "source": "/consejos",
-      "destination": "/consejos/index.html"
-    },
-    {
-      "source": "/404",
-      "destination": "/404/index.html"
-    },
     {
       "source": "/(.*)",
       "destination": "/404.html"

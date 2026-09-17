@@ -171,6 +171,13 @@ const faqSchema = (faqList) => ({
   })),
 });
 
+const postFaq = (p) =>
+  (p.contenido || [])
+    .filter((b) => b.tipo === 'faq' && Array.isArray(b.items))
+    .flatMap((b) => b.items)
+    .filter((it) => it && it.pregunta && it.respuesta)
+    .map((it) => ({ q: it.pregunta, a: it.respuesta }));
+
 const profesionalIndustria = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
@@ -275,6 +282,8 @@ const articuloSchema = (p) => ({
   datePublished: p.fecha,
   dateModified: p.fecha,
   inLanguage: 'es-AR',
+  articleSection: p.categoria,
+  keywords: p.keywords,
   mainEntityOfPage: `${SITE}/noticias/${p.slug}`,
   author: { '@type': 'Organization', name: 'ElectroPower', url: `${SITE}/` },
   publisher: {
@@ -371,11 +380,11 @@ const ROUTES = {
     ],
   },
   '/noticias': {
-    title: 'Noticias | ElectroPower',
+    title: 'Noticias y Casos de Éxito | ElectroPower',
     description:
-      'Novedades y alianzas estratégicas de ElectroPower: anuncios comerciales y acuerdos que amplían nuestros servicios eléctricos en zona norte.',
+      'Novedades, obras y alianzas de ElectroPower: casos de éxito industriales, mantenimiento y acuerdos que amplían nuestros servicios eléctricos en zona norte.',
     keywords:
-      'electropower, noticias, grupos electrógenos, grupo galán, alianza estratégica',
+      'electropower, noticias, casos de exito, obras electricas industriales, grupos electrógenos, grupo galán, alianza estratégica',
     schemas: [LOCAL_BUSINESS, breadcrumbs([{ name: 'Inicio', item: '/' }, { name: 'Noticias' }], '/noticias')],
   },
   '/consejos': {
@@ -434,20 +443,35 @@ const ROUTES = {
     {}
   ),
   ...POSTS.reduce(
-    (acc, p) => ({
-      ...acc,
-      [`/noticias/${p.slug}`]: {
-        title: p.seoTitle,
-        description: p.seoDescription,
-        keywords:
-          p.keywords || 'electropower, grupos electrógenos, grupo galán, noticias',
-        ogType: 'article',
-        schemas: [
-          articuloSchema(p),
-          breadcrumbs([{ name: 'Inicio', item: '/' }, { name: 'Noticias', item: '/noticias' }, { name: p.titulo }], `/noticias/${p.slug}`),
-        ],
-      },
-    }),
+    (acc, p) => {
+      const faq = postFaq(p);
+      const esConsejo = p.tipo === 'consejo';
+      return {
+        ...acc,
+        [`/noticias/${p.slug}`]: {
+          title: p.seoTitle,
+          description: p.seoDescription,
+          keywords:
+            p.keywords || 'electropower, grupos electrógenos, grupo galán, noticias',
+          ogType: 'article',
+          schemas: [
+            articuloSchema(p),
+            ...(faq.length ? [faqSchema(faq)] : []),
+            breadcrumbs(
+              [
+                { name: 'Inicio', item: '/' },
+                {
+                  name: esConsejo ? 'Consejos' : 'Noticias',
+                  item: esConsejo ? '/consejos' : '/noticias',
+                },
+                { name: p.titulo },
+              ],
+              `/noticias/${p.slug}`
+            ),
+          ],
+        },
+      };
+    },
     {}
   ),
   ...VARIANTES.reduce(

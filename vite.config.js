@@ -11,6 +11,7 @@ export default defineConfig({
     historyApiFallback: true,
   },
   build: {
+    cssCodeSplit: false,
     rollupOptions: {
       output: {
         manualChunks(id) {

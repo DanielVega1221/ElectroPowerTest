@@ -17,6 +17,7 @@ import {
   FaClipboardList,
   FaWhatsapp,
   FaPhoneAlt,
+  FaFilePdf,
 } from 'react-icons/fa';
 import { CASOS } from '../../data/casos';
 import { getWhatsAppURL, trackEvent } from '../../lib/analytics';
@@ -284,6 +285,14 @@ const Industria = () => {
               </button>
               <a className="btn-industria-telefono" href="tel:+5491163521258">
                 <FaPhoneAlt /> +54 9 11 6352-1258
+              </a>
+              <a
+                className="btn-industria-dossier"
+                href="/dossier-electropower.pdf"
+                download="Dossier-ElectroPower-Industria.pdf"
+                onClick={() => trackEvent('dossier_download', { location: 'industria' })}
+              >
+                <FaFilePdf /> Descargar dossier (PDF)
               </a>
             </div>
           </div>

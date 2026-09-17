@@ -609,6 +609,26 @@
   box-shadow: 0 10px 25px rgba(0, 79, 140, 0.15);
 }
 
+.btn-industria-dossier {
+  background: var(--amarillo-energia);
+  color: var(--azul-profundo);
+  text-decoration: none;
+  padding: 0.9rem 1.8rem;
+  border-radius: 50px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-industria-dossier:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 212, 59, 0.45);
+}
+
 @media (max-width: 768px) {
   .industria { padding: 4rem 1.5rem 0; }
   .industria::before { height: 90px; }
